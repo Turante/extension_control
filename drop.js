@@ -1,22 +1,16 @@
 function small() {
-    document.body.style.setProperty('--top', '48px');
-    document.body.style.setProperty('--height', '520px');
     var fontsize = document.createElement('style');
     fontsize.innerHTML = '#header {font-size: 14px} body {font-size: 12px} .options, .uninstall, .info, .hide {font-size: 11px}';
     document.body.appendChild(fontsize);
 };
 
 function medium() {
-    document.body.style.setProperty('--top', '50px');
-    document.body.style.setProperty('--height','513px');
     var fontsize = document.createElement('style');
     fontsize.innerHTML = '#header {font-size: 15px} body {font-size: 13px} .options, .uninstall, .info, .hide {font-size: 12px}';
     document.body.appendChild(fontsize);
 };
 
 function large() {
-    document.body.style.setProperty('--top', '51px');
-    document.body.style.setProperty('--height', '532px');
     var fontsize = document.createElement('style');
     fontsize.innerHTML = '#header {font-size: 16px} body {font-size: 14px} .options, .uninstall, .info, .hide {font-size: 13px}';
     document.body.appendChild(fontsize);
@@ -26,12 +20,6 @@ function gutter() {
     var styleGut = document.createElement('style');
     styleGut.innerHTML = '#header {padding: 16px 20px 11px;} .extension, #menu {padding: 5px 15px 5px 20px;} #txtdiv {padding: 0 15px 0 20px} .extension.dev div::before {content:"$"} .extension.out div::before {content:"[]"}';
     document.body.appendChild(styleGut);
-};
-
-function font() {
-    var styleWin = document.createElement('style');
-    styleWin.innerHTML = 'body {text-shadow: var(--fgShadow) 0 0 1px;} .desc {text-shadow: var(--descShadow) 0 0 1px;}';
-    document.body.appendChild(styleWin);
 };
 
 function rmMenu() {
@@ -49,14 +37,29 @@ function options() {
     chrome.runtime.openOptionsPage();
 };
 
+/**
+ * one extension should:
+ * Type (webstore, local, dev)
+ * Icon
+ * Name
+ * Version
+ * Description
+ * ID
+ * Inspect Views (background page inspect launch?)
+ * Reload (enable/disable?)
+ * Enable/Disable
+ * Permissions
+ * Options Page
+ * might be better as a themed extension fork?
+ * BID
+ */
+
 function setup() {
     chrome.storage.sync.get({
         'width': '195',
         'fontsize': 'medium',
         'os': ''
     }, function(start) {
-        const width = start.width;
-        document.body.style.maxWidth = width + 'px';
         const fontsize = start.fontsize;
         if (fontsize === 'small') {
             small();
@@ -66,10 +69,6 @@ function setup() {
         }
         else {
             large();
-        }
-        const os = start.os;
-        if (os === 'win') {
-            font();
         }
     });
 };
