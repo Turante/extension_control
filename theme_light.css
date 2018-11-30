@@ -1,14 +1,11 @@
-
 body {
     display: block;
     font-family: "Segoe UI", sans-serif;
     min-width: 170px;
     min-height: 200px;
-    background: var(--colorBgLight);
-    color: var(--colorFg);
+    background: var(--colorBgDark, #e7e7e7);
+    color: var(--colorFg, #3b3b3b);
     margin: 0;
-    cursor: default;
-    user-select: none;
 }
 
 
@@ -24,8 +21,13 @@ body {
 }
 .extension {
     padding: 5px 15px 5px 15px;
-    cursor: pointer;
-    color: var(--colorFgFadedMore);
+    color: var(--colorFgFadedMore, #7c7c7c);
+    margin-bottom: 10px;
+    background: var(--colorBgLight, #fefefe);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12),
+    0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radiusRounded, 2px);
 }
 .extension div {
     border: 1px solid transparent;
@@ -33,30 +35,95 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.extension:not(.enabled) .name {
     text-decoration: line-through;
-}
-.extension.enabled div {
-    text-decoration: none;
-}
-.extension div::before {
-    position: absolute;
-    content: "";
-    text-align: center;
-    left: 1px;
-    width: 20px;
 }
 .extension.enabled, .extension.enabled:hover {
     font-family: "Segoe UI", sans-serif;
-    color: var(--colorFg);
+    color: var(--colorFg, #3b3b3b);
 }
 .extension:hover {
-    background-color: var(--colorHighlightBg);
-    color: var(--colorHighlightFg);
+    background-color: var(--colorBgAlphaHeavier, rgba(255,255,255,0.2));
 }
-.extension.enabled:hover {
-    color: var(--colorHighlightFg);
+.extension img {
+    width: 16px;
+    height: 16px;
+}
+.extension {
+    display: flex;
+    flex-direction: row;
+}
+.extension .gutter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    max-width: fit-content;
+}
+.extension .details {
+    display: flex;
+    flex-direction: column;
+}
+.extension .permissions,
+.extension:not(.enabled) .description,
+.extension:not(.enabled) .id,
+.extension:not(.enabled) .options,
+.extension:not(.enabled) .homepage {
+    display: none;
 }
 
+.extension .name {
+    font-weight: bold;
+}
+
+
+/*
+.extension:hover .permissions {
+    display: block;
+}*/
+
+/* toggle button from extensions */
+
+input[type="checkbox"]{
+    visibility: hidden;
+    width: 16px;
+    height: 32px;
+    cursor: pointer;
+}
+input[type="checkbox"]:checked::before {
+    background-color: var(--colorAccentBgFadedMost, #6884fb);
+}
+
+input[type="checkbox"]::before {
+    content:" ";
+    background-color: grey;
+    border-radius: 8px;
+    height: 28px;
+    display: block;
+    transition: background-color linear 80ms;
+    width: 12px;
+    z-index: 0;
+    visibility: visible;
+}
+
+input[type="checkbox"]:checked::after {
+    background-color: var(--colorAccentBg, #104fbd);
+    transform: translate(-2px, -28px);
+}
+
+input[type="checkbox"]::after {
+    content:" ";
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    display: block;
+    height: 16px;
+    transform: translate(-2px, -14px);
+    transition: transform linear 80ms, background-color linear 80ms;
+    width: 16px;
+    z-index: 1;
+    visibility: visible;
+}
 
 /* Menu */
 
@@ -65,49 +132,49 @@ body {
     white-space: nowrap;
     overflow: hidden;
 }
-.info, .hide, .options, .uninstall {
+.info, .hide/*, .options*/, .uninstall {
     font-family: "Segoe UI", sans-serif;
     width: 48%;
     text-align: center;
     padding: 8px 0;
     border-radius: 3px;
-    background-color: var(--colorBgFaded);
+    background-color: var(--colorBgFaded, #e2e2e2);
 }
 .info {
     float: left;
-    color: var(--colorFgFaded);
+    color: var(--colorFgFaded, #5a5a5a);
     cursor: pointer;
 }
 .hide {
     float: right;
-    color: var(--colorFgFaded);
+    color: var(--colorFgFaded, #5a5a5a);
     cursor: pointer;
-}
+}/*
 .options {
     float: left;
     clear: left;
     margin-top: 5px;
-    color: var(--colorFgFaded);
+    color: var(--colorFgFaded, #5a5a5a);
     cursor: default;
 }
 .options.optActive {
-    color: var(--colorFgFaded);
+    color: var(--colorFgFaded, #5a5a5a);
     cursor: pointer;
-}
-.info:hover, .hide:hover, .options.optActive:hover {
-    background-color: var(--colorAccentBg);
-    color: var(--colorAccentFg) !important;
+}*/
+.info:hover, .hide:hover/*, .options.optActive:hover*/ {
+    background-color: var(--colorAccentBg, #104fbd);
+    color: var(--colorAccentFg, #f6f6f6) !important;
 }
 .uninstall {
     float: right;
     clear: right;
     margin-top: 5px;
-    color: var(--colorFgFaded);
+    color: var(--colorFgFaded, #5a5a5a);
     cursor: pointer;
 }
 .uninstall:hover {
-    background-color: var(--colorAccentBg);
-    color: var(--colorAccentFg) !important;
+    background-color: var(--colorAccentBg, #104fbd);
+    color: var(--colorAccentFg, #f6f6f6) !important;
 }
 
 
@@ -134,7 +201,7 @@ body {
 }
 .desc {
     font-family: "Segoe UI", sans-serif;
-    color: var(--colorFg);
+    color: var(--colorFg, #3b3b3b);
 }
 #copy {
     cursor: pointer;
