@@ -47,47 +47,37 @@ body {
     background-color: var(--colorBgAlphaHeavier, rgba(255,255,255,0.2));
 }
 .extension img {
-    width: 16px;
     height: 16px;
+    margin-right: 6px;
 }
 .extension {
     display: flex;
-    flex-direction: row;
-}
-.extension .gutter {
-    display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    max-width: fit-content;
+}
+.extension .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 .extension .details {
+    display: none;
+}
+.extension.expanded .details {
     display: flex;
     flex-direction: column;
 }
-.extension .permissions,
-.extension:not(.enabled) .description,
-.extension:not(.enabled) .id,
-.extension:not(.enabled) .options,
-.extension:not(.enabled) .homepage {
-    display: none;
-}
-
 .extension .name {
     font-weight: bold;
 }
-
-
-/*
-.extension:hover .permissions {
-    display: block;
-}*/
+.extension a, .extension a:visited {
+    color: var(--colorHighlightBg, #3367d6);
+}
 
 /* toggle button from extensions */
-
 input[type="checkbox"]{
     visibility: hidden;
-    width: 16px;
-    height: 32px;
+    width: 32px;
+    height: 16px;
     cursor: pointer;
 }
 input[type="checkbox"]:checked::before {
@@ -98,17 +88,17 @@ input[type="checkbox"]::before {
     content:" ";
     background-color: grey;
     border-radius: 8px;
-    height: 28px;
+    height: 12px;
     display: block;
     transition: background-color linear 80ms;
-    width: 12px;
+    width: 28px;
     z-index: 0;
     visibility: visible;
 }
 
 input[type="checkbox"]:checked::after {
     background-color: var(--colorAccentBg, #104fbd);
-    transform: translate(-2px, -28px);
+    transform: translate(14px, -14px);
 }
 
 input[type="checkbox"]::after {
@@ -128,55 +118,25 @@ input[type="checkbox"]::after {
 /* Menu */
 
 #menu {
-    padding: 5px 15px 5px 15px;
-    white-space: nowrap;
-    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
-.info, .hide/*, .options*/, .uninstall {
-    font-family: "Segoe UI", sans-serif;
-    width: 48%;
+.hide, .uninstall {
     text-align: center;
-    padding: 8px 0;
-    border-radius: 3px;
-    background-color: var(--colorBgFaded, #e2e2e2);
-}
-.info {
-    float: left;
-    color: var(--colorFgFaded, #5a5a5a);
+    border: 1px solid var(--colorBorder, rgb(218, 220, 224));
+    border-radius: var(--radius, 4px);
+    background: var(--colorBgLight, #fefefe);
+    color: var(--colorFg, #3b3b3b);
+    padding: 8px 16px;
+    text-decoration: none;
+    text-transform: none;
     cursor: pointer;
 }
-.hide {
-    float: right;
-    color: var(--colorFgFaded, #5a5a5a);
-    cursor: pointer;
-}/*
-.options {
-    float: left;
-    clear: left;
-    margin-top: 5px;
-    color: var(--colorFgFaded, #5a5a5a);
-    cursor: default;
-}
-.options.optActive {
-    color: var(--colorFgFaded, #5a5a5a);
-    cursor: pointer;
-}*/
-.info:hover, .hide:hover/*, .options.optActive:hover*/ {
+.hide:hover, .uninstall:hover {
     background-color: var(--colorAccentBg, #104fbd);
     color: var(--colorAccentFg, #f6f6f6) !important;
 }
-.uninstall {
-    float: right;
-    clear: right;
-    margin-top: 5px;
-    color: var(--colorFgFaded, #5a5a5a);
-    cursor: pointer;
-}
-.uninstall:hover {
-    background-color: var(--colorAccentBg, #104fbd);
-    color: var(--colorAccentFg, #f6f6f6) !important;
-}
-
 
 /* Info */
 

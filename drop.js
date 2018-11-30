@@ -25,11 +25,15 @@ function gutter() {
 function rmMenu() {
     const thisMenu = document.getElementById('menu');
     const thisInfo = document.getElementById('txtdiv');
+    const ext = document.querySelector(".expanded");
     if (thisMenu) {
         thisMenu.outerHTML = '';
     }
     if (thisInfo) {
         thisInfo.outerHTML = '';
+    }
+    if(ext){
+        ext.classList.remove("expanded");
     }
 };
 
@@ -98,20 +102,18 @@ function load() {
                         let homepage = info[i].homepageUrl ? `<a class="homepage" href="${info[i].homepageUrl}">Homepage</a>` : "";
                         let install = info[i].installType!=="normal" ? `(${info[i].installType})` : "";
                         extItem.innerHTML = `
-                            <div class="gutter">
+                            <div class="header">
                                 <img class="icon" src="${icon}" />
+                                <div class="name">${info[i].name}</div>
                                 <input type="checkbox" tabindex="-1" ${checked}></input>
                             </div>
                             <div class="details">
-                                <div class="name">${info[i].name}</div>
                                 <div class="version" title="Version">${info[i].version} ${install}</div>
                                 <div class="description" title="Description">${info[i].description}</div>
                                 <div class="id" title="ID">${info[i].id}</div>
                                 <div class="links">${options} ${homepage}</div>
                                 ${permissions}
-                                <!-- * Inspect Views (background page inspect launch?)
-                                * Reload (enable/disable?)
-                                * Enable/Disable-->
+                                <!-- * Inspect Views (background page inspect launch?) -->
                             </div>
                         `;
                         switcher.appendChild(extItem);
@@ -127,9 +129,10 @@ function load() {
 };
 
 function run() {
-    const extensions = document.querySelectorAll('.extension input');
+    const extensionInputs = document.querySelectorAll('.extension input');
+    const extensions = document.querySelectorAll('.extension');
     for (i=0; i<extensions.length; i++) {
-        extensions[i].addEventListener('input', function(event){
+        extensionInputs[i].addEventListener('input', function(event){
             rmMenu();
             extID = event.target.parentElement.parentElement.getAttribute('id');
             chrome.management.setEnabled(extID, event.target.checked);
@@ -141,53 +144,18 @@ function run() {
         });
 
         extensions[i].addEventListener('contextmenu', function(i) {
-           /* event.preventDefault();
+            event.preventDefault();
             rmMenu();
             extID = extensions[i].getAttribute('id');
             menu = document.createElement('div');
             menu.id = 'menu';
-            extensions[i].insertAdjacentElement('afterend', menu);
-
-            // info
-            var inf = document.createElement('span');
-            inf.classList.add('info');
-            inf.innerHTML = 'info';
-            menu.appendChild(inf);
-            inf.addEventListener('click', function() {
-                const toggle = document.getElementById('txtdiv');
-                if (toggle) {
-                    toggle.outerHTML = '';
-                }
-                else {
-                    chrome.management.get(extID, function(text) {
-                        var version = text.version;
-                        var home = text.homepageUrl;
-                        if (home !== '') {
-                            var jmp = 0;
-                        }
-                        else {
-                            var jmp = 1;
-                        }
-                        var txtdiv = document.createElement('div');
-                        txtdiv.id = 'txtdiv';
-                        txtdiv.innerHTML = '<p><span class="desc">version </span>' + version + '</p><p id="home"><a class="desc" href="' + home + '" target="_blank" rel="noreferrer noopener">homepage</a></p><p><span class="desc">id </span><span id="copy">' + extID + '</span></p>';
-                        extensions[i].insertAdjacentElement('afterend', txtdiv);
-                        if (jmp === 1) {
-                            document.getElementById('home').style.display = 'none';
-                        }
-                        const cpID = document.getElementById('copy');cpID.addEventListener('click', function() {
-                            navigator.clipboard.writeText(extID);
-                            cpID.style.cursor = 'default';
-                            cpID.innerHTML = 'copied';
-                        });
-                    });
-                }
-            });
+            extensions[i].appendChild(menu);
+            extensions[i].classList.add("expanded");
 
             // hide
             var hide = document.createElement('span');
             hide.classList.add('hide');
-            hide.innerHTML = 'hide';
+            hide.innerHTML = 'Hide';
             menu.appendChild(hide);
             hide.addEventListener('click', function() {
                 chrome.storage.sync.get({'hidden': ''}, function(arr) {
@@ -201,27 +169,10 @@ function run() {
                 });
             });
 
-            // options
-            var options = document.createElement('span');
-            options.classList.add('options');
-            options.innerHTML = 'options';
-            chrome.management.get(extID, function(opt) {
-                var extOpt = opt.optionsUrl;
-                if (extOpt !== '') {
-                    menu.appendChild(options);
-                    if (opt.enabled === true) {
-                        options.classList.add('optActive');
-                        options.addEventListener('click', function() {
-                            chrome.tabs.create({url: extOpt});
-                        });
-                    }
-                }
-            });
-
             // uninstall
             var unInst = document.createElement('span');
             unInst.classList.add('uninstall');
-            unInst.innerHTML = 'uninstall';
+            unInst.innerHTML = 'Uninstall';
             menu.appendChild(unInst);
             unInst.addEventListener('click', function() {
                 chrome.management.uninstall(extID, function() {
@@ -233,7 +184,7 @@ function run() {
                         extensions[i].style.display = 'none';
                     }
                 });
-            });*/
+            });
         }.bind(this, i));
     }
 };
@@ -242,4 +193,3 @@ hidden = [];
 setup();
 load();
 document.getElementById('switcher').addEventListener('mouseleave', rmMenu);
-document.getElementById('header').addEventListener('click', options);
