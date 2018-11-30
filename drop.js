@@ -144,6 +144,9 @@ function run() {
         });
 
         extensions[i].addEventListener('contextmenu', function(i) {
+            if(event.target.tagName.toUpperCase()==="A"){
+                return;
+            }
             event.preventDefault();
             rmMenu();
             extID = extensions[i].getAttribute('id');
