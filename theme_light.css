@@ -32,9 +32,7 @@ body {
 .extension div {
     border: 1px solid transparent;
     width: 100%;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 .extension:not(.enabled) .name {
     text-decoration: line-through;
@@ -68,6 +66,10 @@ body {
 }
 .extension .name {
     font-weight: bold;
+}
+.extension:not(.expanded) .name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .extension a, .extension a:visited {
     color: var(--colorHighlightBg, #3367d6);
@@ -113,6 +115,11 @@ input[type="checkbox"]::after {
     width: 16px;
     z-index: 1;
     visibility: visible;
+}
+
+input[type="checkbox"][disabled]{
+    filter: grayscale(1);
+    pointer-events: none;
 }
 
 /* Menu */
