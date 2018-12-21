@@ -120,6 +120,15 @@ function load() {
                                 <!-- * Inspect Views (background page inspect launch?) -->
                             </div>
                         `;
+                        if(info[i].optionsUrl){
+                            const icon = extItem.querySelector(".icon");
+                            icon.style.cursor = "pointer";
+                            icon.title = "Click to visit options";
+                            icon.setAttribute("opt-url", info[i].optionsUrl);
+                            icon.addEventListener("click", e => {
+                                chrome.tabs.create({url: e.target.getAttribute("opt-url")});
+                            });
+                        }
                         switcher.appendChild(extItem);
                     }
                 }
