@@ -1,3 +1,27 @@
+@media (prefers-color-scheme: light) {
+    body {
+        --colorBgDark: #e7e7e7;
+        --colorBgLight: #fefefe;
+        --colorFg: #3b3b3b;
+        --colorFgFadedMore: #7c7c7c;
+        --colorHighlightBg: #3367d6;
+        --colorAccentFg: #f6f6f6;
+        --colorBorder: #242424;
+    }
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        --colorBgDark: #2a2a2a;
+        --colorBgLight: #343434;
+        --colorFg: #cdc8c0;
+        --colorFgFadedMore: #858079;
+        --colorHighlightBg: #8ac5f0;
+        --colorAccentFg: #f6f6f6;
+        --colorBorder: #242424;
+    }
+}
+
+
 body {
     display: block;
     font-family: "Segoe UI", sans-serif;
